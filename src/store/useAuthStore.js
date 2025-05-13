@@ -1,16 +1,16 @@
 import { create } from "zustand";
 import { axiosInstance } from "../lib/axios.js";
 
-export const useAuthStore = create((set, get) => ({
+export const useAuthStore = create((set) => ({
   authUser: null,
   isSigningUp: false,
   isLoggingIn: false,
   isCheckingAuth: true,
   isProducting: false,
-  products: [], // Ini adalah array produk yang akan digunakan di komponen
+  products: [],
   product: null,
     isOrder: false,
-    order: [], // Ini adalah array order yang akan digunakan di komponen
+    order: [], 
   checkAuth: async () => {
     try {
       const res = await axiosInstance.get("/check");
@@ -31,7 +31,7 @@ export const useAuthStore = create((set, get) => ({
     } catch (error) {
       console.log(error);
     } finally {
-      set({ isLoggingIn: false }); // typo diperbaiki
+      set({ isLoggingIn: false }); 
     }
   },
 
@@ -39,7 +39,6 @@ export const useAuthStore = create((set, get) => ({
     try {
       await axiosInstance.post("/logout");
       set({ authUser: null });
-      get().disconnectSocket?.(); // gunakan optional chaining jika disconnectSocket tidak selalu ada
     } catch (error) {
       console.log(error);
     }
